@@ -3,7 +3,7 @@
     "name": "hybridi_vt_7",
     "slug": "hybridi_vt_7",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "landscape",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
