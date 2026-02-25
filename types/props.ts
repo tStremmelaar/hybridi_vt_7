@@ -5,6 +5,14 @@ export type betProps = {
   startGame: (bet: number) => void
 }
 
+export type boardProps = {
+  bet: number
+}
+
+export type handProps = {
+  hand: card[]
+}
+
 export type cardProps = {
   card: card
 }

@@ -1,3 +1,5 @@
+import { card } from "./types"
+
 export type deckResponse = {
   success: boolean
   deck_id: string
@@ -5,17 +7,9 @@ export type deckResponse = {
   remaining: number
 }
 
-export type cardResponse = {
-  code: string
-  image: string
-  images: { svg: string, png: string }
-  value: string
-  suit: string
-}
-
 export type drawResponse = {
   success: boolean
   deck_id: string
-  cards: cardResponse[]
+  cards: card[]
   remaining: number
 }

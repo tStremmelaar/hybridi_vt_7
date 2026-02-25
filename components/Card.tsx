@@ -7,14 +7,31 @@ export default function Card(
 ) {
   return (
     <View style={styles.card}>
+      {!(props.card.faceDown) && (
+        <Image
+          style={styles.image}
+          source={{ uri: props.card.image }}
+          resizeMode={'contain'}
+        />
+      )}
+      {props.card.faceDown && (
+        <Image
+          style={styles.image}
+          source={{ uri: 'https://deckofcardsapi.com/static/img/back.png' }}
+          resizeMode={'stretch'}
+        />
+      )}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   card: {
-    flex: 1,
-    margin: 3,
+    height: '100%',
     aspectRatio: 113 / 157,
-  }
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
 })

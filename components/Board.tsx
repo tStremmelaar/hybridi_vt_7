@@ -1,42 +1,39 @@
-import { Button, Pressable, StyleSheet, Text, View } from "react-native";
-import Foundations from "./Foundations";
-import { useEffect, useState } from "react";
-import createDeck from "../functions/createDeck";
-import Stock from "./Stock";
-import CardBack from "./CardBack";
+import { StyleSheet, View } from "react-native";
+import { boardProps } from "../types/props";
 import Card from "./Card";
-import Empty from "./Empty";
+import { useEffect, useState } from "react";
+import { card } from "../types/types";
+import Hand from "./Hand";
+import drawInitial from "../functions/drawInitial";
+import createDeck from "../functions/createDeck";
 
-export default function Board() {
+export default function Board({props}: {props: boardProps}) {
   const [drawUrl, setDrawUrl] = useState<string>('')
-  const [bet, setBet] = useState<number>(0)
+  const [dealerHand, setDealerHand] = useState<card[]>([])
+  const [playerHand, setPlayerHand] = useState<card[]>([])
 
-  async function handleStart() {
-    try {
-      const response = await createDeck()
-      const newDrawUrl = `https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/`
-      setDrawUrl(newDrawUrl)
-    } catch (error) {
-      console.error(error)
+  useEffect(() => {
+    async function handleStart() {
+      try {
+        const response = await createDeck()
+        const newDrawUrl = `https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/`
+        setDrawUrl(newDrawUrl)
+
+        const cards = (await drawInitial(newDrawUrl)).cards
+        console.log(cards)
+        setPlayerHand([cards[0], cards[2]])
+        setDealerHand([{...cards[1], faceDown: true}, cards[3]])
+      } catch (error) {
+        console.error(error)
+      }
     }
-  }
+    handleStart()
+  }, [])
 
   return (
     <View style={styles.board}>
-      <View style={styles.topRow}>
-        <Stock />
-        <Empty />
-        <View style={styles.blank} />
-        <Foundations />
-      </View>
-      <View style={styles.bottomRow}>
-
-      </View>
-      {(drawUrl.length === 0) && (
-        <Pressable onPress={handleStart}>
-          <Text style={styles.start}>Start</Text>
-        </Pressable>
-      )}
+      <Hand props={{hand: dealerHand}} />
+      <Hand props={{hand: playerHand}} />
     </View>
   )
 }
@@ -44,30 +41,5 @@ export default function Board() {
 const styles = StyleSheet.create({
   board: {
     flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-  topRow: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  blank: {
-    flex: 1,
-    margin: 3,
-  },
-  bottomRow: {
-    flex: 5,
-    backgroundColor: '#00f',
-    flexDirection: 'row',
-  },
-  start: {
-    padding: 5,
-    marginBottom: 10,
-    borderRadius: 7,
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-    backgroundColor: '#007',
-  },
+  }
 })

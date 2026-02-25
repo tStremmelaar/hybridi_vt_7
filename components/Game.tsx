@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { StyleSheet, View } from "react-native"
 import Bet from "./Bet"
+import Board from "./Board"
+import { card } from "../types/types"
 
 export default function Game() {
   const [gameInProgress, setGameInProgress] = useState<boolean>(false)
@@ -10,12 +12,16 @@ export default function Game() {
   function startGame(bet: number) {
     setBet(bet)
     setBank(bank - bet)
+    setGameInProgress(true)
   }
 
   return (
     <View style={styles.game}>
       {!gameInProgress && (
         <Bet props={{bank, startGame}} />
+      )}
+      {gameInProgress && (
+        <Board props={{bet}} />
       )}
     </View>
   )

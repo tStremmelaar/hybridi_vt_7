@@ -1,3 +1,9 @@
-import { cardResponse } from "./responses"
+export type card = {
+  faceDown?: boolean
 
-export type card = cardResponse & { faceDown?: boolean }
+  code: string
+  image: string
+  images: { svg: string, png: string }
+  value: string
+  suit: string
+}
