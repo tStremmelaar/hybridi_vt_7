@@ -6,11 +6,16 @@ import { card } from "../types/types";
 import Hand from "./Hand";
 import drawInitial from "../functions/drawInitial";
 import createDeck from "../functions/createDeck";
+import Actions from "./Actions";
+import drawOne from "../functions/drawOne";
+import calculatePoints from "../functions/calculatePoints";
 
 export default function Board({props}: {props: boardProps}) {
   const [drawUrl, setDrawUrl] = useState<string>('')
   const [dealerHand, setDealerHand] = useState<card[]>([])
+  const [dealerPoints, setDealerPoints] = useState<number>(0)
   const [playerHand, setPlayerHand] = useState<card[]>([])
+  const [playerPoints, setPlayerPoints] = useState<number>(0)
 
   useEffect(() => {
     async function handleStart() {
@@ -21,7 +26,8 @@ export default function Board({props}: {props: boardProps}) {
 
         const cards = (await drawInitial(newDrawUrl)).cards
         console.log(cards)
-        setPlayerHand([cards[0], cards[2]])
+        const newPlayerHand = [cards[0], cards[2]]
+        setPlayerHand(newPlayerHand)
         setDealerHand([{...cards[1], faceDown: true}, cards[3]])
       } catch (error) {
         console.error(error)
@@ -30,10 +36,33 @@ export default function Board({props}: {props: boardProps}) {
     handleStart()
   }, [])
 
+  useEffect(() => {
+    function setPoints() {
+      const points = calculatePoints(dealerHand, playerHand)
+      setDealerPoints(points[0])
+      setPlayerPoints(points[1])
+    }
+    setPoints()
+  }, [dealerHand, playerHand])
+
+  async function handleStand() {
+    
+  }
+
+  async function handlePlayerHit() {
+    try {
+      const card = (await drawOne(drawUrl))
+      setPlayerHand([...playerHand, card])
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <View style={styles.board}>
-      <Hand props={{hand: dealerHand}} />
-      <Hand props={{hand: playerHand}} />
+      <Hand props={{hand: dealerHand, points: dealerPoints}} />
+      <Hand props={{hand: playerHand, points: playerPoints}} />
+      <Actions props={{stand: handleStand, hit: handlePlayerHit}} />
     </View>
   )
 }

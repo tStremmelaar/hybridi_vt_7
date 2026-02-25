@@ -11,12 +11,14 @@ export type boardProps = {
 
 export type handProps = {
   hand: card[]
+  points: number
 }
 
 export type cardProps = {
   card: card
 }
 
-export type foundationProps = {
-  cards: card[]
+export type actionsProps = {
+  hit: () => void
+  stand: () => void
 }

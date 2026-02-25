@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Board from './components/oldBoard';
 import Game from './components/Game';
 
 export default function App() {
+  // A game of blackjack. Cards and the deck logic are from deckofcardsapi.com.
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <Game />
