@@ -2,9 +2,11 @@ import { StyleSheet, View } from "react-native"
 import { foundationProps } from "../types/props"
 
 export default function Foundation({props}: {props: foundationProps}) {
-  <View style={styles.foundation}>
+  return (
+    <View style={styles.foundation}>
     
-  </View>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

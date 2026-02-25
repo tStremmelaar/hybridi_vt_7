@@ -3,11 +3,10 @@ import { cardProps } from "../types/props";
 import CardBack from "./CardBack";
 
 export default function Card(
-  // {props}: {props: cardProps}
+  {props}: {props: cardProps}
 ) {
   return (
     <View style={styles.card}>
-      <CardBack />
     </View>
   )
 }

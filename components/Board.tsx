@@ -5,6 +5,7 @@ import createDeck from "../functions/createDeck";
 import Stock from "./Stock";
 import CardBack from "./CardBack";
 import Card from "./Card";
+import Empty from "./Empty";
 
 export default function Board() {
   const [drawUrl, setDrawUrl] = useState<string>('')
@@ -22,6 +23,7 @@ export default function Board() {
     <View style={styles.board}>
       <View style={styles.topRow}>
         <Stock />
+        <Empty />
         <View style={styles.blank} />
         <Foundations />
       </View>
