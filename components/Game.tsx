@@ -25,7 +25,7 @@ export default function Game() {
 
   async function endGame(winnings: number) {
     setBank(bank + winnings)
-    setTimeout(() => {setTimePassed(true)}, 5000)
+    setTimeout(() => {setTimePassed(true)}, 3000)
   }
 
   return (

@@ -48,14 +48,39 @@ export default function Board({props}: {props: boardProps}) {
 
   async function handleStand() {
     if (canPlay) {
-      
+      dealerHand.map((card, index) => {
+        if (index === 0) {
+          card.faceDown = false
+        }
+        return card
+      })
+      let dp = calculatePoints(dealerHand)
+      while (dp < 17) {
+        try {
+          const card = await drawOne(drawUrl)
+          const newDealerHand = [...dealerHand, card]
+          dp = calculatePoints(newDealerHand)
+          setDealerHand(newDealerHand)
+        } catch (error) {
+          console.error(error)
+        }
+      }
+      const pp = calculatePoints(playerHand)
+      let winnings = 0
+      if ((dp > 21) || (pp > dp)) {
+        props.endGame(2 * props.bet)
+      } else if (pp === dp) {
+        props.endGame(props.bet)
+      } else {
+        props.endGame(0)
+      }
     }
   }
 
   async function handlePlayerHit() {
     if (canPlay) {
       try {
-        const card = (await drawOne(drawUrl))
+        const card = await drawOne(drawUrl)
         const newPlayerHand = [...playerHand, card]
         setPlayerHand(newPlayerHand)
         const points = calculatePoints(newPlayerHand)
