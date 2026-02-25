@@ -6,9 +6,9 @@ import { useEffect } from "react"
 export default function Hand({props}: {props: handProps}) {
   return (
     <View style={styles.hand}>
-      <Text style={styles.points}>
+      {/* <Text style={styles.points}>
         {props.points}
-      </Text>
+      </Text> */}
       {props.hand.map((card, index) => {
         return (
           <View key={'card' + index} style={styles.withFiller}>
@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     bottom: 0,
-    height: '80%',
+    // height: '80%',
+    height: '100%',
     width: '100%',
   }
 })

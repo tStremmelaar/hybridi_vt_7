@@ -1,6 +1,6 @@
 import { card } from "../types/types";
 
-function calculatePoint(hand: card[]) {
+export default function calculatePoints(hand: card[]) {
   let aces = 0
   let points = 0
   hand.forEach((card, index) => {
@@ -9,7 +9,6 @@ function calculatePoint(hand: card[]) {
       console.log('aces: ' + aces)
     } else if (['JACK', 'QUEEN', 'KING'].includes(card.value)) {
       points += 10
-      console.log(card.value + ' added 10: ' + points)
     } else {
       points += Number(card.value)
       console.log(`${card.value} added ${Number(card.value)}: ${points}`)
@@ -22,10 +21,4 @@ function calculatePoint(hand: card[]) {
   }
   
   return points
-}
-
-export default function calculatePoints(dealerHand: card[], playerHand: card[]) {
-  const dealerPoint = calculatePoint(dealerHand)
-  const playerPoint = calculatePoint(playerHand)
-  return [dealerPoint, playerPoint]
 }

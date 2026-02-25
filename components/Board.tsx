@@ -37,13 +37,12 @@ export default function Board({props}: {props: boardProps}) {
   }, [])
 
   useEffect(() => {
-    function setPoints() {
-      const points = calculatePoints(dealerHand, playerHand)
-      setDealerPoints(points[0])
-      setPlayerPoints(points[1])
-    }
-    setPoints()
-  }, [dealerHand, playerHand])
+    setDealerPoints(calculatePoints(dealerHand))
+  }, [dealerHand])
+
+  useEffect(() => {
+    setPlayerPoints(calculatePoints(playerHand))
+  }, [playerHand])
 
   async function handleStand() {
     
