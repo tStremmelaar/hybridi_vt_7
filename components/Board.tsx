@@ -16,6 +16,7 @@ export default function Board({props}: {props: boardProps}) {
   const [dealerPoints, setDealerPoints] = useState<number>(0)
   const [playerHand, setPlayerHand] = useState<card[]>([])
   const [playerPoints, setPlayerPoints] = useState<number>(0)
+  const [canPlay, setCanPlay] = useState<boolean>(true)
 
   useEffect(() => {
     async function handleStart() {
@@ -25,10 +26,11 @@ export default function Board({props}: {props: boardProps}) {
         setDrawUrl(newDrawUrl)
 
         const cards = (await drawInitial(newDrawUrl)).cards
-        console.log(cards)
         const newPlayerHand = [cards[0], cards[2]]
         setPlayerHand(newPlayerHand)
         setDealerHand([{...cards[1], faceDown: true}, cards[3]])
+        
+        setCanPlay(true)
       } catch (error) {
         console.error(error)
       }
@@ -45,15 +47,25 @@ export default function Board({props}: {props: boardProps}) {
   }, [playerHand])
 
   async function handleStand() {
-    
+    if (canPlay) {
+      
+    }
   }
 
   async function handlePlayerHit() {
-    try {
-      const card = (await drawOne(drawUrl))
-      setPlayerHand([...playerHand, card])
-    } catch (error) {
-      console.error(error)
+    if (canPlay) {
+      try {
+        const card = (await drawOne(drawUrl))
+        const newPlayerHand = [...playerHand, card]
+        setPlayerHand(newPlayerHand)
+        const points = calculatePoints(newPlayerHand)
+        if (points > 21) {
+          setCanPlay(false)
+          props.endGame(0)
+        }
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 

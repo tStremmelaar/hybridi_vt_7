@@ -7,6 +7,7 @@ export type betProps = {
 
 export type boardProps = {
   bet: number
+  endGame: (winnings: number) => void
 }
 
 export type handProps = {
