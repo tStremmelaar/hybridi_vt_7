@@ -9,11 +9,13 @@ import Empty from "./Empty";
 
 export default function Board() {
   const [drawUrl, setDrawUrl] = useState<string>('')
+  const [bet, setBet] = useState<number>(0)
 
   async function handleStart() {
     try {
       const response = await createDeck()
-      setDrawUrl(`https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/`)
+      const newDrawUrl = `https://deckofcardsapi.com/api/deck/${response.deck_id}/draw/`
+      setDrawUrl(newDrawUrl)
     } catch (error) {
       console.error(error)
     }

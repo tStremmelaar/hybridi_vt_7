@@ -1,4 +1,4 @@
-import { deckResponse } from "../types"
+import { deckResponse } from "../types/responses"
 
 export default async function createDeck(): Promise<deckResponse> {
   try {
